@@ -423,6 +423,9 @@ fun TikTokVideoPlayer(
                         view.player = exoPlayer
                     }
                 },
+                onRelease = { view ->
+                    view.player = null
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .alpha(if (hasVideoTrack) 1f else 0f)
