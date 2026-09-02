@@ -157,12 +157,17 @@ fun TikTokVideoPlayer(
     var exoPlayer by remember { mutableStateOf<ExoPlayer?>(null) }
 
     // Create player only when active with video/audio URL, and release immediately on inactive
-    DisposableEffect(isActive, videoUrl) {
-        if (isActive && videoUrl.isNotEmpty()) {
+    DisposableEffect(isActive, videoUrl, isPhoto) {
+        val hasPlayableVideo = videoUrl.isNotBlank() && (!isPhoto || videoUrl.endsWith(".mp4") || videoUrl.contains("video"))
+        if (isActive && hasPlayableVideo) {
             hasError = false
             isBuffering = true
 
-            val player = ExoPlayer.Builder(context)
+            val renderersFactory = DefaultRenderersFactory(context)
+                .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF)
+                .setEnableDecoderFallback(true)
+
+            val player = ExoPlayer.Builder(context, renderersFactory)
                 .setAudioAttributes(
                     AudioAttributes.Builder()
                         .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
