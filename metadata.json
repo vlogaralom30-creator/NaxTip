@@ -1,0 +1,6 @@
+{
+  "name": "TikProm",
+  "description": "TikTok-style AI prompt discovery and video sharing app with instant link extraction and 1-click prompt copying",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
